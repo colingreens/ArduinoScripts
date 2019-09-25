@@ -1,0 +1,40 @@
+#include <dht.h>
+#define DHT11_PIN 7 //Analog pin sensor is connected to
+
+dht DHT;
+const int pResistor1 = A1;
+const int pResistor2 = A2;
+
+int pRvalue1;
+int pRvalue2;
+double temperatureF;
+
+void setup() {
+  Serial.begin(9600);
+  //lcd.begin(16, 2);
+  delay(500);  
+  Serial.println("Temperature(F), Humidity(%), Light 1, Light 2");
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+    int chk = DHT.read11(DHT11_PIN);
+    pRvalue1 = analogRead(pResistor1);
+    pRvalue2 = analogRead(pResistor2);
+    temperatureF = (DHT.temperature * 9.0 / 5.0) + 32;
+    
+    
+    Serial.print(temperatureF);
+    Serial.print(", ");
+    Serial.print(DHT.humidity);
+    Serial.print(", ");
+    Serial.print(pRvalue1);
+    Serial.print(", ");
+    Serial.print(pRvalue2);
+    Serial.print(", ");
+    Serial.print("\n");
+    delay(300000);
+
+}
